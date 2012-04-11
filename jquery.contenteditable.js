@@ -65,14 +65,13 @@ jQuery.fn.contentEdit = function(options) {
 		var textarea = document.createElement('textarea');
 		var $textarea = jQuery(textarea);
 		var offset = $this.offset();
-		var top = offset.top + parseFloat($this.css('padding-top')) + 1;
-		var left = offset.left + parseFloat($this.css('padding-left')) + 1;
+		var padding = $this.css('padding-top') + ' ' + $this.css('padding-right') + ' ' + $this.css('padding-bottom') + ' ' + $this.css('padding-left');
 		$textarea.css({
 			'position': 'absolute',
-			'top': top,
-			'left': left,
+			'top': offset.top + 1,
+			'left': offset.left + 1,
 			'margin': '0',
-			'padding': '0',
+			'padding': padding,
 			'border-width': '0',
 			'font': $this.css('font'),
 			'color': 'inherit',
@@ -100,6 +99,11 @@ jQuery.fn.contentEdit = function(options) {
 			$div.html(options.toHTML($this.val()));
 			$this.width($div.width());
 			$this.height($div.height());
+			var offset = $div.offset();
+			$this.css({
+				'top': offset.top + 1,
+				'left': offset.left + 1
+			});
 		});
 
 		// Make sure the textarea is the right size
