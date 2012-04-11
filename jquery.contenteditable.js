@@ -28,7 +28,8 @@ Rights Reserved.
 
 */
 
-jQuery.fn.contentEditable = function(options) {
+// Start editing an element
+jQuery.fn.contentEdit = function(options) {
 
 	// Default options
 	if (!options) options = {};
@@ -49,64 +50,92 @@ jQuery.fn.contentEditable = function(options) {
 		// Get me
 		var $this = jQuery(this);
 
-		// Okay, when I'm clicked...
+		// Start editing if we aren't already
+		if ($this.data('focused')) return;
+		$this.data('focused', true);
+
+		// Build a textarea and put it on top of me
+		var textarea = document.createElement('textarea');
+		var $textarea = jQuery(textarea);
+		var offset = $this.offset();
+		var top = offset.top + parseFloat($this.css('padding-top')) + 1;
+		var left = offset.left + parseFloat($this.css('padding-left')) + 1;
+		$textarea.css({
+			'position': 'absolute',
+			'top': top,
+			'left': left,
+			'margin': '0',
+			'padding': '0',
+			'border-width': '0',
+			'font': $this.css('font'),
+			'color': 'inherit',
+			'background-color': 'transparent',
+			'outline': 'none',
+			'resize': 'none',
+			'overflow': 'hidden'
+		});
+		$textarea.val(options.fromHTML($this.html()));
+		$textarea.data('div', this);
+		$this.data('textarea', textarea);
+		document.body.appendChild(textarea);
+
+		// Focus the textarea
+		$textarea.trigger('focus');
+
+		// Hide my text
+		$this.data('oldColor', $this.css('color'));
+		$this.css('color', 'transparent');
+
+		// When I edit, change the HTML
+		$textarea.on('keyup', function() {
+			var $this = jQuery(this);
+			var $div = jQuery($this.data('div'));
+			$div.html(options.toHTML($this.val()));
+			$this.width($div.width());
+			$this.height($div.height());
+		});
+
+		// Make sure the textarea is the right size
+		$textarea.width($this.width());
+		$textarea.height($this.height());
+
+	});
+
+};
+
+// Quit editing an element
+jQuery.fn.contentUnedit = function() {
+
+	return this.each(function() {
+
+		var $this = jQuery(this);
+		var $textarea = jQuery($this.data('textarea'));
+		$this.data('focused', false);
+		if ($div.data('oldColor'))
+			$div.css('color', $div.data('oldColor'));
+		$textarea.remove();
+
+	});
+
+};
+
+// Do some simple bindings for edit and unedit
+jQuery.fn.contentEditable = function(options) {
+
+	return this.each(function() {
+
+		var $this = jQuery(this);
+
 		$this.on('click', function() {
 
-			// Start editing if we aren't already
-			if ($this.data('focused')) return;
-			$this.data('focused', true);
+			// Edit me when I'm clicked...
+			$this.contentEdit(options);
 
-			// Build a textarea and put it on top of me
-			var textarea = document.createElement('textarea');
-			var $textarea = jQuery(textarea);
-			var offset = $this.offset();
-			var top = offset.top + parseFloat($this.css('padding-top')) + 1;
-			var left = offset.left + parseFloat($this.css('padding-left')) + 1;
-			$textarea.css({
-				'position': 'absolute',
-				'top': top,
-				'left': left,
-				'margin': '0',
-				'padding': '0',
-				'border-width': '0',
-				'font': $this.css('font'),
-				'color': 'inherit',
-				'background-color': 'transparent',
-				'outline': 'none',
-				'resize': 'none',
-				'overflow': 'hidden'
-			});
-			$textarea.val(options.fromHTML($this.html()));
-			$textarea.data('div', this);
-			document.body.appendChild(textarea);
-
-			// Focus the textarea
-			$textarea.trigger('focus');
-
-			// Hide my text
-			$this.data('oldColor', $this.css('color'));
-			$this.css('color', 'transparent');
-
-			// When I edit, change the HTML
-			$textarea.on('keyup', function() {
-				var $this = jQuery(this);
-				var $div = jQuery($this.data('div'));
-				$div.html(options.toHTML($this.val()));
-				$this.width($div.width());
-				$this.height($div.height());
-			});
-
-			// Make sure the textarea is the right size
-			$textarea.width($this.width());
-			$textarea.height($this.height());
-
-			// When the textarea is blurred, we're done editing
+			// ...and unedit when you unfocus the textarea.
+			$textarea = jQuery($this.data('textarea'));
 			$textarea.on('blur', function() {
-				var $this = jQuery(this);
 				var $div = jQuery($this.data('div'));
-				$div.data('focused', false);
-				$div.css('color', $div.data('oldColor'));
-				$this.remove();
+				$div.contentUnedit();
 			});
 
 		});
