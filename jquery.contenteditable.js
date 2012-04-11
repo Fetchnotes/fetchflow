@@ -68,7 +68,7 @@ jQuery.fn.contentEditable = function(options) {
 				'left': left,
 				'margin': '0',
 				'padding': '0',
-				'border': '1px solid red',	// TODO TEMP
+				'border': '0',
 				'font': $this.css('font'),
 				'color': 'blue',	// TODO TEMP
 				'background': 'transparent',
