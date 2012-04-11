@@ -66,6 +66,10 @@ jQuery.fn.contentEditable = function() {
 			this.appendChild(textarea);	
 			$textarea.focus();
 
+			// Make sure the textarea is the right size
+			$textarea.width($this.width());
+			$textarea.height($this.height());
+
 			// When the textarea is blurred, we're done editing
 			$textarea.on('blur', function() {
 				var $this = jQuery(this);
