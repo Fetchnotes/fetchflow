@@ -81,6 +81,10 @@ jQuery.fn.contentEditable = function(options) {
 			document.body.appendChild(textarea);
 			$textarea.focus();
 
+			// Hide my text
+			$this.data('oldColor', $this.css('color'));
+			$this.css('color', 'transparent');
+
 			// When I edit, change the HTML
 			$textarea.on('keyup', function() {
 				var $this = jQuery(this);
@@ -99,6 +103,7 @@ jQuery.fn.contentEditable = function(options) {
 				var $this = jQuery(this);
 				var $div = jQuery($this.data('div'));
 				$div.data('focused', false);
+				$div.css('color', $div.data('oldColor'));
 				$this.remove();
 			});
 
