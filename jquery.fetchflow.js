@@ -115,7 +115,7 @@ jQuery.fn.fetchflowEdit = function(options) {
 			var $div = jQuery($this.data('div'));
 			$div.html(options.toHTML($this.val()));
 			$this.width($div.width());
-			$this.height($div.height());
+			$this.height($div.height() + (parseInt($this.css('font-size')) / 2));
 			var offset = $div.offset();
 			$this.css({
 				'top': offset.top + 1,
