@@ -109,7 +109,7 @@ jQuery.fn.fetchflowEdit = function(options) {
 		$this.data('oldColor', $this.css('color'));
 		$this.css('color', 'transparent');
 
-		// When I edit, change the HTML
+		// When I edit, change the HTML and make the textarea correct
 		$textarea.on('keydown keyup', function() {
 			var $this = jQuery(this);
 			var $div = jQuery($this.data('div'));
