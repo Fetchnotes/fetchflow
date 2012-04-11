@@ -33,6 +33,7 @@ jQuery.fn.contentEdit = function(options) {
 
 	// Default options
 	if (!options) options = {};
+
 	if (typeof options.fromHTML === 'undefined') {
 		options.fromHTML = function(html) {
 			html = html.replace(/<br>/g, '\n').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
@@ -42,6 +43,7 @@ jQuery.fn.contentEdit = function(options) {
 			return html.substring(0, lastNewline);
 		};
 	}
+
 	if (typeof options.toHTML === 'undefined') {
 		options.toHTML = function(text) {
 			text = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
