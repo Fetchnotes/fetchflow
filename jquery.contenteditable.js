@@ -59,7 +59,7 @@ jQuery.fn.contentEditable = function() {
 				'left': $this.css('padding-left'),
 				'margin': '0',
 				'padding': '0',
-				'border': '1px solid red',	// TEMP fix this
+				'border': '1px solid red',	// TODO TEMP
 				'font': 'inherit',
 				'background': 'transparent',
 				'outline': 'none',
