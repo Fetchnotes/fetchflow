@@ -113,7 +113,8 @@ jQuery.fn.contentUnedit = function() {
 		$this.data('focused', false);
 		if ($div.data('oldColor'))
 			$div.css('color', $div.data('oldColor'));
-		$textarea.remove();
+		if ($textarea)
+			$textarea.remove();
 
 	});
 
