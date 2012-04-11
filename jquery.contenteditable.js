@@ -111,8 +111,8 @@ jQuery.fn.contentUnedit = function() {
 		var $this = jQuery(this);
 		var $textarea = jQuery($this.data('textarea'));
 		$this.data('focused', false);
-		if ($div.data('oldColor'))
-			$div.css('color', $div.data('oldColor'));
+		if ($this.data('oldColor'))
+			$this.css('color', $this.data('oldColor'));
 		if ($textarea)
 			$textarea.remove();
 
@@ -135,7 +135,7 @@ jQuery.fn.contentEditable = function(options) {
 			// ...and unedit when you unfocus the textarea.
 			$textarea = jQuery($this.data('textarea'));
 			$textarea.on('blur', function() {
-				var $div = jQuery($this.data('div'));
+				var $div = jQuery($(this).data('div'));
 				$div.contentUnedit();
 			});
 
