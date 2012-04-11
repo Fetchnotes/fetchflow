@@ -94,7 +94,7 @@ jQuery.fn.contentEdit = function(options) {
 		$this.css('color', 'transparent');
 
 		// When I edit, change the HTML
-		$textarea.on('keyup', function() {
+		$textarea.on('keydown keyup', function() {
 			var $this = jQuery(this);
 			var $div = jQuery($this.data('div'));
 			$div.html(options.toHTML($this.val()));
