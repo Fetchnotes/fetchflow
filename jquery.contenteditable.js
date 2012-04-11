@@ -35,10 +35,6 @@ jQuery.fn.contentEditable = function() {
 		// Get me
 		var $this = jQuery(this);
 
-		// Make sure I'm not statically positioned so I can position the textarea
-		if ($this.css('position') == 'static')
-			$this.css('position', 'relative')
-
 		// Okay, when I'm clicked...
 		$this.on('click', function() {
 
@@ -49,22 +45,34 @@ jQuery.fn.contentEditable = function() {
 			// Build a textarea and put it on top of me
 			var textarea = document.createElement('textarea');
 			var $textarea = jQuery(textarea);
+			var offset = $this.offset();
+			var top = offset.top + parseFloat($this.css('padding-top'));
+			var left = offset.left + parseFloat($this.css('padding-left'));
 			$textarea.css({
 				'position': 'absolute',
-				'top': $this.css('padding-top'),
-				'left': $this.css('padding-left'),
+				'top': top,
+				'left': left,
 				'margin': '0',
 				'padding': '0',
 				'border': '1px solid red',	// TODO TEMP
-				'font': 'inherit',
+				'font': $this.css('font'),
 				'color': 'blue',	// TODO TEMP
 				'background': 'transparent',
 				'outline': 'none',
-				'resize': 'none'
+				'resize': 'none',
+				'overflow': 'hidden'
 			});
 			$textarea.val($this.text());
-			this.appendChild(textarea);	
+			$textarea.data('div', this);
+			document.body.appendChild(textarea);
 			$textarea.focus();
+
+			// When I edit, change the HTML
+			$textarea.on('keyup', function() {
+				var $this = jQuery(this);
+				var $div = jQuery($this.data('div'));
+				$div.html($this.val());
+			});
 
 			// Make sure the textarea is the right size
 			$textarea.width($this.width());
@@ -73,8 +81,8 @@ jQuery.fn.contentEditable = function() {
 			// When the textarea is blurred, we're done editing
 			$textarea.on('blur', function() {
 				var $this = jQuery(this);
-				var $parent = $this.parent();
-				$parent.data('focused', false);
+				var $div = jQuery($this.data('div'));
+				$div.data('focused', false);
 				$this.remove();
 			});
 
