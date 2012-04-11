@@ -66,6 +66,15 @@ jQuery.fn.contentEditable = function() {
 				'resize': 'none'
 			});
 			this.appendChild(textarea);	
+			$textarea.focus();
+
+			// When the textarea is blurred, we're done editing
+			$textarea.on('blur', function() {
+				var $this = jQuery(this);
+				var $parent = $this.parent();
+				$parent.data('focused', false);
+				$this.remove();
+			});
 
 		});
 
