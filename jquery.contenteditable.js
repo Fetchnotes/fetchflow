@@ -60,8 +60,8 @@ jQuery.fn.contentEditable = function(options) {
 			var textarea = document.createElement('textarea');
 			var $textarea = jQuery(textarea);
 			var offset = $this.offset();
-			var top = offset.top + parseFloat($this.css('padding-top'));
-			var left = offset.left + parseFloat($this.css('padding-left'));
+			var top = offset.top + parseFloat($this.css('padding-top')) + 1;
+			var left = offset.left + parseFloat($this.css('padding-left')) + 1;
 			$textarea.css({
 				'position': 'absolute',
 				'top': top,
