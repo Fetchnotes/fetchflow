@@ -70,7 +70,7 @@ jQuery.fn.contentEditable = function(options) {
 				'padding': '0',
 				'border-width': '0',
 				'font': $this.css('font'),
-				'color': 'blue',	// TODO TEMP
+				'color': 'inherit',
 				'background-color': 'transparent',
 				'outline': 'none',
 				'resize': 'none',
