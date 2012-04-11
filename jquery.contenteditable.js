@@ -57,10 +57,12 @@ jQuery.fn.contentEditable = function() {
 				'padding': '0',
 				'border': '1px solid red',	// TODO TEMP
 				'font': 'inherit',
+				'color': 'blue',	// TODO TEMP
 				'background': 'transparent',
 				'outline': 'none',
 				'resize': 'none'
 			});
+			$textarea.val($this.text());
 			this.appendChild(textarea);	
 			$textarea.focus();
 
