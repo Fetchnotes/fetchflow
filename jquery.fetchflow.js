@@ -68,6 +68,10 @@ jQuery.fn.fetchflowEdit = function(options) {
 		};
 	}
 
+	if (typeof options.onEdit === 'undefined') {
+		options.onEdit = function() {};
+	}
+
 	// For every element we've selected...
 	return this.each(function() {
 
@@ -121,6 +125,7 @@ jQuery.fn.fetchflowEdit = function(options) {
 				'top': offset.top + 1,
 				'left': offset.left + 1
 			});
+			options.onEdit($this.val());
 		});
 
 		// Make sure the textarea is the right size
