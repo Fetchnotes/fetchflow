@@ -3,6 +3,25 @@
 Fetchflow jQuery plugin
 =======================
 
+Fetchflow is a better version of `contenteditable`. Here's how to use it:
+
+To start editing an element, just do this:
+
+    $('#foo').fetchflowEdit();
+
+To stop editing it:
+
+	$('#foo').fetchflowUnedit();
+
+If you want to make it editable (i.e., bind clicks and blurs to the above):
+
+    $('#foo').fetchflowEditable();
+
+Enjoy!
+
+********************************************************************************
+
+Fetchflow jQuery plugin
 Copyright (c) 2012 Fetchnotes, LLC
 
 Permission is hereby granted, free of charge, to any person obtaining a
