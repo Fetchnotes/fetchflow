@@ -28,8 +28,22 @@ Rights Reserved.
 
 */
 
-jQuery.fn.contentEditable = function() {
+jQuery.fn.contentEditable = function(options) {
 
+	// Default options
+	if (!options) options = {};
+	if (typeof options.fromHTML === 'undefined') {
+		options.fromHTML = function(html) {
+			return html.replace(/<br>/g, '\n');
+		};
+	}
+	if (typeof options.toHTML === 'undefined') {
+		options.toHTML = function(text) {
+			return text.replace(/\n/g, '<br>') + '<br>';
+		};
+	}
+
+	// For every element we've selected...
 	return this.each(function() {
 
 		// Get me
@@ -62,7 +76,7 @@ jQuery.fn.contentEditable = function() {
 				'resize': 'none',
 				'overflow': 'hidden'
 			});
-			$textarea.val($this.text());
+			$textarea.val(options.fromHTML($this.html()));
 			$textarea.data('div', this);
 			document.body.appendChild(textarea);
 			$textarea.focus();
@@ -71,7 +85,9 @@ jQuery.fn.contentEditable = function() {
 			$textarea.on('keyup', function() {
 				var $this = jQuery(this);
 				var $div = jQuery($this.data('div'));
-				$div.html($this.val());
+				$div.html(options.toHTML($this.val()));
+				$this.width($div.width());
+				$this.height($div.height());
 			});
 
 			// Make sure the textarea is the right size
