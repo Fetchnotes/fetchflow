@@ -79,7 +79,9 @@ jQuery.fn.contentEditable = function(options) {
 			$textarea.val(options.fromHTML($this.html()));
 			$textarea.data('div', this);
 			document.body.appendChild(textarea);
-			$textarea.focus();
+
+			// Focus the textarea
+			$textarea.trigger('focus');
 
 			// Hide my text
 			$this.data('oldColor', $this.css('color'));
