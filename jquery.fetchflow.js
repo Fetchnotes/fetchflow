@@ -1,7 +1,7 @@
 /*
 
-Content editable jQuery plugin
-==============================
+Fetchflow jQuery plugin
+=======================
 
 Copyright (c) 2012 Fetchnotes, LLC
 
@@ -27,7 +27,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 // Start editing an element
-jQuery.fn.contentEdit = function(options) {
+jQuery.fn.fetchflowEdit = function(options) {
 
 	// Default options
 	if (!options) options = {};
@@ -113,7 +113,7 @@ jQuery.fn.contentEdit = function(options) {
 };
 
 // Quit editing an element
-jQuery.fn.contentUnedit = function() {
+jQuery.fn.fetchflowUnedit = function() {
 
 	return this.each(function() {
 
@@ -130,7 +130,7 @@ jQuery.fn.contentUnedit = function() {
 };
 
 // Do some simple bindings for edit and unedit
-jQuery.fn.contentEditable = function(options) {
+jQuery.fn.fetchflowEditable = function(options) {
 
 	return this.each(function() {
 
@@ -139,13 +139,13 @@ jQuery.fn.contentEditable = function(options) {
 		$this.on('click', function() {
 
 			// Edit me when I'm clicked...
-			$this.contentEdit(options);
+			$this.fetchflowEdit(options);
 
 			// ...and unedit when you unfocus the textarea.
 			$textarea = jQuery($this.data('textarea'));
 			$textarea.on('blur', function() {
 				var $div = jQuery($(this).data('div'));
-				$div.contentUnedit();
+				$div.fetchflowUnedit();
 			});
 
 		});
