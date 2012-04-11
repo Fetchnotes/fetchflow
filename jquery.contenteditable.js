@@ -35,12 +35,17 @@ jQuery.fn.contentEdit = function(options) {
 	if (!options) options = {};
 	if (typeof options.fromHTML === 'undefined') {
 		options.fromHTML = function(html) {
-			return html.replace(/<br>/g, '\n');
+			html = html.replace(/<br>/g, '\n').replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+			var lastNewline = html.lastIndexOf('\n');
+			if (lastNewline === -1)
+				return html;
+			return html.substring(0, lastNewline);
 		};
 	}
 	if (typeof options.toHTML === 'undefined') {
 		options.toHTML = function(text) {
-			return text.replace(/\n/g, '<br>') + '<br>';
+			text = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
+			return text + '<br>';
 		};
 	}
 
